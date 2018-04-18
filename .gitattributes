@@ -1,2 +1,35 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+@@ -0,0 +1,34 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 17 00:40:04 2018
+
+@author: rohitchawda
+"""
+
+import tweepy
+import csv
+import pandas as pd
+####input your credentials here
+consumer_key = '2mX9ztFqcA274XwSyFQKhgZYu'
+consumer_secret = 'Ntw9Uzq3IikxFq8qXkOagyf55sasik5vODhsGgXYltkSrSGnUG'
+access_token = '985958708806017024-DNjKekSqi7BXVSRAsU2fZHvrPzwk0Su'
+access_token_secret = '8K816PCyAxY4UbEZJJG4KHIgAvusLzpRURkzInHbumjTu'
+
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth,wait_on_rate_limit=True)
+#####United Airlines
+# Open/Create a file to append data
+csvFile = open('ua.csv', 'a')
+#Use csv Writer
+csvWriter = csv.writer(csvFile)
+
+for tweet in tweepy.Cursor(api.search,q="#beychella",count=100,
+                           lang="en").items():
+    print (tweet.created_at, tweet.text)
+    csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
+
+exit()
+
+https://github.com/rohitchawda29/Users-rohitchawda-untitled1.py.git
